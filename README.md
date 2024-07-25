@@ -165,6 +165,40 @@ class Solution {
 }
 ```
 > [Reference](https://www.youtube.com/watch?v=3-QbX1iDbXs&list=PLgUwDviBIf0rF1w2Koyh78zafB0cz7tea&index=3)
+### 55. Jump Game
+[lrrtcode link](https://leetcode.com/problems/jump-game/description/)
+<br>
+You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
+Return true if you can reach the last index, or false otherwise.
+
+Example 1:
+Input: nums = [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+
+Example 2:
+Input: nums = [3,2,1,0,4]
+Output: false
+Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+
+```java
+class Solution {
+    public boolean canJump(int[] nums) {
+        int max_index=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(i>max_index) return false;
+            max_index=Math.max(max_index,i+nums[i]);
+        }
+        return true;
+    }
+}
+```
+- in this code we return true if we cross the array otherwise return false
+- initially maxindex is 0
+- iterate througth the elements in the array find the maximum index jump
+- if the iteration is greater than the maxindex then we return false because i cross the one element but we did not reach means we did not jump the element.
+> [Refrence](https://youtu.be/tZAa_jJ3SwQ?si=voKd7n9VTLDRRNzJ)
      
 
 
