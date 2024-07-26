@@ -244,6 +244,136 @@ class Solution {
 - so seats array is position of seats and the students array is the position of the students position.
 - So we sort both array. Then the first seat is for the first student so we find the difference of the each pair we get the minimum position 
 > [Reference](https://www.youtube.com/watch?v=wS7Ag33hf8E)
+### Fractional Knapsack
+[Geeksfrgeeks link]()
+<br>
+Given weights and values of n items, we need to put these items in a knapsack of capacity w to get the maximum total value in the knapsack. Return a double value representing the maximum value in knapsack.
+Note: Unlike 0/1 knapsack, you are allowed to break the item here. The details of structure/class is defined in the comments above the given function.
+
+Examples :
+Input: n = 3, w = 50, value[] = [60,100,120], weight[] = [10,20,30]
+Output: 240.000000
+Explanation: Take the item with value 60 and weight 10, value 100 and weight 20 and split the third item with value 120 and weight 30, to fit it into weight 20. so it becomes (120/30)*20=80, so the total value becomes 60+100+80.0=240.0 Thus, total maximum value of item we can have is 240.00 from the given capacity of sack. 
+Input: n = 2, w = 50, value[] = [60,100], weight[] = [10,20]
+Output: 160.000000
+Explanation: Take both the items completely, without breaking. Total maximum value of item we can have is 160.00 from the given capacity of sack.
+
+```java
+class Solution {
+    double fractionalKnapsack(int w, Item arr[], int n) {
+        // Create an array of indices sorted by value-to-weight ratio in descending order
+        Integer[] indices = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            indices[i] = i;
+        }
+        Arrays.sort(indices, new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+                double r1 = (double) arr[i1].value / arr[i1].weight;
+                double r2 = (double) arr[i2].value / arr[i2].weight;
+                return Double.compare(r2, r1); // Sort in descending order
+            }
+        });
+        
+        double totalValue = 0.0;
+        int currentWeight = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int idx = indices[i];
+            if (currentWeight + arr[idx].weight <= w) {
+                currentWeight += arr[idx].weight;
+                totalValue += arr[idx].value;
+            } else {
+                int remain = w - currentWeight;
+                totalValue += arr[idx].value * ((double) remain / arr[idx].weight);
+                break;
+            }
+        }
+        
+        return totalValue;
+    }
+}
+```
+- In this code first sort the arr Items by one value That is per weight calucalation.
+- After sort the arr items iterate over the loop check if current+arr[idx] weight is lesser than the maximum weight.
+- else we find remain
+- add the remain weight value to the tatal value.
+> [Reference](https://www.youtube.com/watch?v=1ibsQrnuEEg)
+### 678. Valid Parenthesis String
+[Leetcode link](https://leetcode.com/problems/valid-parenthesis-string/description/)
+<br>
+Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.
+The following rules define a valid string:
+Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+Any right parenthesis ')' must have a corresponding left parenthesis '('.
+Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+'*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string "".
+
+Example 1:
+Input: s = "()"
+Output: true
+
+Example 2:
+Input: s = "(*)"
+Output: true
+
+Example 3:
+Input: s = "(*))"
+Output: true
+#### Recursive Solution
+```java
+class Solution {
+    public boolean checkValidString(String s) {
+        int c=0;
+        int star=0;
+        for(int i=0;i<s.length();i++) if(s.charAt(i)=='*') star++;
+        if(star>=s.length()) 
+        {
+            if(star%2==0) return true;
+            else return false;
+        }
+        boolean t=check(s,0,0);
+        return t;
+        //open +1 close -1.
+    }
+    public boolean check(String s,int index,int count)
+    {
+        if(count<0) return false;
+        if(index>=s.length()) return true && (count==0);
+        if(s.charAt(index)=='(') return check(s,index+1,count+1);
+        else if(s.charAt(index)==')') return check(s,index+1,count-1);
+        else return check(s,index+1,count+1) || check(s,index+1,count-1) || check(s,index+1,count);
+    }
+}
+```
+#### Greedy Solution
+```java
+class Solution {
+    public boolean checkValidString(String s) {
+        int leftmin=0;
+        int leftmax=0;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='('){
+                leftmin++;
+                leftmax++;
+            }
+            else if(s.charAt(i)==')'){
+                leftmin--;
+                leftmax--;
+            }
+            else{
+                leftmin--;
+                leftmax++;
+            }
+            if(leftmax<0) return false;
+            if(leftmin<0) leftmin=0;
+        }
+        return leftmin==0;
+        
+    }
+}
+```
+> [Refernce](https://www.youtube.com/watch?v=QhPdNS143Qg&t=587s)
+
  
      
 
