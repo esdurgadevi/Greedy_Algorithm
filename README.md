@@ -465,7 +465,104 @@ class Solution {
 - Similarly, we use the final 2 larger digits as the digits found in the ones place.
 - So from the first first smaller digit in h1 and second smaller digit in h2 simultaneously changing.
 - After completing the loop we return the sum of the h1 and h2.
+### 2864. Maximum Odd Binary Number
+[Leetcode link](https://leetcode.com/problems/maximum-odd-binary-number/description/)
+<br>
+You are given a binary string s that contains at least one '1'.You have to rearrange the bits in such a way that the resulting binary number is the maximum odd binary number that can be created from this combination.Return a string representing the maximum odd binary number that can be created from the given combination.Note that the resulting string can have leading zeros.
 
+Example 1:
+Input: s = "010"
+Output: "001"
+Explanation: Because there is just one '1', it must be in the last position. So the answer is "001"
+
+Example 2:
+Input: s = "0101"
+Output: "1001"
+Explanation: One of the '1's must be in the last position. The maximum number that can be made with the remaining digits is "100". So the answer is "1001".
+
+```java
+class Solution {
+    public String maximumOddBinaryNumber(String s) {
+        int one=0;
+        StringBuilder str = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='1') one++;
+        }
+        for(int i=0;i<s.length()-1;i++){
+            if(one>1) {
+                str.append('1');
+                one--;
+            }
+            else str.append('0');
+        }
+        str.append('1');
+        return str.toString();
+    }
+}
+```
+- The binary representation of an odd number contains '1' in the least significant place.
+- From the above hint we easily find that if we return the odd integer then the last digit is must be a one
+- If we return the maximum odd integer then the remaining ones are in the front of the string
+- In that information we count the one from the given string and store in variable one then (one-1) ones are in the front of the string the remaining place are zeros except the final place
+- And return the string.
+### 1323. Maximum 69 Number
+[Leetcode link](https://leetcode.com/problems/maximum-69-number/)
+<br>
+You are given a positive integer num consisting only of digits 6 and 9.Return the maximum number you can get by changing at most one digit (6 becomes 9, and 9 becomes 6).
+
+Example 1:
+Input: num = 9669
+Output: 9969
+Explanation: 
+Changing the first digit results in 6669.
+Changing the second digit results in 9969.
+Changing the third digit results in 9699.
+Changing the fourth digit results in 9666.
+The maximum number is 9969.
+
+Example 2:
+Input: num = 9996
+Output: 9999
+Explanation: Changing the last digit 6 to 9 results in the maximum number.
+
+Example 3:
+Input: num = 9999
+Output: 9999
+Explanation: It is better not to apply any change.
+
+Constraints:
+1 <= num <= 104
+num consists of only 6 and 9 digits.
+
+```java
+class Solution {
+    public int maximum69Number (int num) {
+        String s1 = Integer.toString(num);
+        int change = 0;
+        StringBuilder s2 = new StringBuilder(); 
+        for(int i=0;i<s1.length();i++)
+        {
+            if(s1.charAt(i)=='6' && change==0)
+            {
+                s2.append('9');
+                change=1;
+            } 
+            else s2.append(s1.charAt(i));
+        }
+        return Integer.parseInt(s2.toString());  
+    }
+}
+```
+- In this code we change any one digit then it will be the maximum.
+- Only 6 and 9 in the num
+- first we convert the num to string
+- Then create a empty stringbuilder.
+- Iterate the string when we find the first 6 that time we appdend the 9 otherwise we append the same char in string (s1).
+- It will occur only one time so i use change variable to track it.
+- After finish the loop convert string builder to string using toString
+- And convert the string to Integer using Integer.parseInt().
+
+ 
  
      
 
