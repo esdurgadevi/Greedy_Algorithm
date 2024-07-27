@@ -373,6 +373,98 @@ class Solution {
 }
 ```
 > [Refernce](https://www.youtube.com/watch?v=QhPdNS143Qg&t=587s)
+### 1221. Split a String in Balanced Strings
+[Leetcode Link](https://leetcode.com/problems/split-a-string-in-balanced-strings/)
+<br>
+Balanced strings are those that have an equal quantity of 'L' and 'R' characters. Given a balanced string s, split it into some number of substrings such that: Each substring is balanced.
+Return the maximum number of balanced strings you can obtain.
+
+Example 1:
+Input: s = "RLRRLLRLRL"
+Output: 4
+Explanation: s can be split into "RL", "RRLL", "RL", "RL", each substring contains same number of 'L' and 'R'.
+
+Example 2:
+Input: s = "RLRRRLLRLL"
+Output: 2
+Explanation: s can be split into "RL", "RRRLLRLL", each substring contains same number of 'L' and 'R'.
+Note that s cannot be split into "RL", "RR", "RL", "LR", "LL", because the 2nd and 5th substrings are not balanced.
+
+Example 3:
+Input: s = "LLLLRRRR"
+Output: 1
+Explanation: s can be split into "LLLLRRRR".
+
+```java
+class Solution {
+    public int balancedStringSplit(String s) {
+        int ans=0;
+        int current_count=0;
+        for(int i=0;i<s.length();i++){
+            if(current_count==0) ans++;
+            if(s.charAt(i)=='R') current_count++;
+            else current_count--;
+        }
+        return ans;
+        
+    }
+}
+```
+- In this code we return the maximum satisfying string.
+- Maximum meaning (equal no of R and L )
+- So if R then increase the current count and L decrease the current count.
+- Whenever it reaches to zero then that is consider to be a satisfying string so increase the ans then return the ans.
+### 2160. Minimum Sum of Four Digit Number After Splitting Digits
+[leetcode link](https://leetcode.com/problems/minimum-sum-of-four-digit-number-after-splitting-digits/)
+<br>
+You are given a positive integer num consisting of exactly four digits. Split num into two new integers new1 and new2 by using the digits found in num. Leading zeros are allowed in new1 and new2, and all the digits found in num must be used.
+For example, given num = 2932, you have the following digits: two 2's, one 9 and one 3. Some of the possible pairs [new1, new2] are [22, 93], [23, 92], [223, 9] and [2, 329].
+Return the minimum possible sum of new1 and new2.
+
+Example 1:
+Input: num = 2932
+Output: 52
+Explanation: Some possible pairs [new1, new2] are [29, 23], [223, 9], etc.
+The minimum sum can be obtained by the pair [29, 23]: 29 + 23 = 52.
+
+Example 2:
+Input: num = 4009
+Output: 13
+Explanation: Some possible pairs [new1, new2] are [0, 49], [490, 0], etc. 
+The minimum sum can be obtained by the pair [4, 9]: 4 + 9 = 13.
+
+```java
+class Solution {
+    public int minimumSum(int num) {
+        int[] digit = new int[10];
+        while(num>0)
+        {
+            digit[num%10]++;
+            num/=10;
+        }
+        int h1=0,h2=0;
+        int f=1;
+        for(int i=0;i<10;i++){
+            while(digit[i]>0){
+                if(f==1){
+                    h1=(h1*10)+i;   
+                    f=0;
+                }
+                else{
+                    h2=(h2*10)+i;
+                    f=1;
+                }
+                digit[i]--;
+            }
+        }
+        return h1+h2;
+    }
+}
+```
+- We can use the two smallest digits out of the four as the digits found in the tens place respectively.
+- Similarly, we use the final 2 larger digits as the digits found in the ones place.
+- So from the first first smaller digit in h1 and second smaller digit in h2 simultaneously changing.
+- After completing the loop we return the sum of the h1 and h2.
 
  
      
