@@ -561,6 +561,72 @@ class Solution {
 - It will occur only one time so i use change variable to track it.
 - After finish the loop convert string builder to string using toString
 - And convert the string to Integer using Integer.parseInt().
+### 135. Candy
+[Leetcode link](https://leetcode.com/problems/candy/)
+<br>
+There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.
+
+You are giving candies to these children subjected to the following requirements:
+
+Each child must have at least one candy. Children with a higher rating get more candies than their neighbors. Return the minimum number of candies you need to have to distribute the candies to the children.
+
+Example 1:
+
+Input: ratings = [1,0,2]
+Output: 5
+Explanation: You can allocate to the first, second and third child with 2, 1, 2 candies respectively.
+
+Example 2:
+Input: ratings = [1,2,2]
+Output: 4
+Explanation: You can allocate to the first, second and third child with 1, 2, 1 candies respectively.
+The third child gets 1 candy because it satisfies the above two conditions.
+
+```java
+class Solution {
+    public int candy(int[] ratings) {
+        int[] l = new int[ratings.length];
+        int[] r = new int[ratings.length];
+        Arrays.fill(l,1);
+        Arrays.fill(r,1);
+        for(int i=1;i<ratings.length;i++)
+        {
+            if(ratings[i]<ratings[i-1]) 
+            {
+                if(l[i-1]<=l[i]) l[i-1]=l[i]+1;
+            }
+            else if(ratings[i]>ratings[i-1]) 
+            {
+                if(l[i]<=l[i-1]) l[i]=l[i-1]+1;
+            }
+        }
+        for(int i=ratings.length-1;i>0;i--)
+        {
+            if(ratings[i]<ratings[i-1]) 
+            {
+                if(r[i-1]<=r[i]) r[i-1]=r[i]+1;
+            }
+            else if(ratings[i]>ratings[i-1]) 
+            {
+                if(r[i]<=r[i-1]) r[i]=r[i-1]+1;
+            }
+        }
+        int sum=0;
+        for(int i=0;i<l.length;i++)
+        {
+            sum=sum+Math.max(l[i],r[i]);
+        }
+        return sum;
+    }
+}
+```
+- In this program we return the minimum no of candies.
+- So right to left and left to right we assign the candies
+- find the maximum of these two arrays we find the sum and return it
+- Why we iterate both right to left and left to right.
+- ex see the note.
+> [Reference](https://www.youtube.com/watch?v=h6_lIwZYHQw)
+ 
 
  
  
