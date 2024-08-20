@@ -695,12 +695,144 @@ class Solution {
 - the next three buttons we push four times so (i/8)+1 = 4 * frequency of the letter.
 - finaaly we add all the pushes and return it.
 > [Refernce](https://www.youtube.com/watch?v=gvaYi6X6SQw&t=184s)
+### 2697. Lexicographically Smallest Palindrome
+[Leetcode link](https://leetcode.com/problems/lexicographically-smallest-palindrome/description/)
+<br>
+You are given a string s consisting of lowercase English letters, and you are allowed to perform operations on it. In one operation, you can replace a character in s with another lowercase English letter.
+Your task is to make s a palindrome with the minimum number of operations possible. If there are multiple palindromes that can be made using the minimum number of operations, make the lexicographically smallest one.
+A string a is lexicographically smaller than a string b (of the same length) if in the first position where a and b differ, string a has a letter that appears earlier in the alphabet than the corresponding letter in b.
+Return the resulting palindrome string.
 
+Example 1:
+Input: s = "egcfe"
+Output: "efcfe"
+Explanation: The minimum number of operations to make "egcfe" a palindrome is 1, and the lexicographically smallest palindrome string we can get by modifying one character is "efcfe", by changing 'g'.
 
- 
+Example 2:
+Input: s = "abcd"
+Output: "abba"
+Explanation: The minimum number of operations to make "abcd" a palindrome is 2, and the lexicographically smallest palindrome string we can get by modifying two characters is "abba".
 
- 
- 
+Example 3:
+Input: s = "seven"
+Output: "neven"
+Explanation: The minimum number of operations to make "seven" a palindrome is 1, and the lexicographically smallest palindrome string we can get by modifying one character is "neven". 
+
+Constraints:
+1 <= s.length <= 1000
+s consists of only lowercase English letters.
+
+```java
+class Solution {
+    public String makeSmallestPalindrome(String s) {
+        StringBuilder str = new StringBuilder();
+        for(int i=0;i<s.length();i++)
+        {
+            if(s.charAt(i)==s.charAt(s.length()-i-1)) str.append(s.charAt(i));
+            else
+            {
+                if(s.charAt(i)<s.charAt(s.length()-i-1)) str.append(s.charAt(i));
+                else str.append(s.charAt(s.length()-i-1));
+            }
+        }
+        return str.toString();
+
+    }
+}
+```
+- Check if the two character that is first and last is equal or not if it is equal then we append the character.
+- Otherwise we check the minimum one then we append the minimum one to the stringbuilder.
+- Finally we return the stringbuilder as a string using the toString() method.
+### 1827. Minimum Operations to Make the Array Increasing
+[Leetcode link](https://leetcode.com/problems/minimum-operations-to-make-the-array-increasing/)
+<br>
+You are given an integer array nums (0-indexed). In one operation, you can choose an element of the array and increment it by 1.
+For example, if nums = [1,2,3], you can choose to increment nums[1] to make nums = [1,3,3].
+Return the minimum number of operations needed to make nums strictly increasing.
+An array nums is strictly increasing if nums[i] < nums[i+1] for all 0 <= i < nums.length - 1. An array of length 1 is trivially strictly increasing.
+
+Example 1:
+Input: nums = [1,1,1]
+Output: 3
+Explanation: You can do the following operations:
+1) Increment nums[2], so nums becomes [1,1,2].
+2) Increment nums[1], so nums becomes [1,2,2].
+3) Increment nums[2], so nums becomes [1,2,3].
+
+Example 2:
+Input: nums = [1,5,2,4,1]
+Output: 14
+
+Example 3:
+Input: nums = [8]
+Output: 0
+
+Constraints:
+1 <= nums.length <= 5000
+1 <= nums[i] <= 104
+
+```java
+class Solution {
+    public int minOperations(int[] nums) {
+        int sum = 0;
+        for(int i=0;i<nums.length-1;i++)
+        {
+            if(nums[i]>=nums[i+1]) 
+            {
+                sum+=(nums[i]-nums[i+1])+1;
+                nums[i+1]=nums[i]+1;
+            }
+        }
+        return sum;
+    }
+}
+```
+- in this code we create array that must be in strictly increasing sequence.
+- So what we do is whenever the first element is greater than or equal to the second element then we find the difference between the two elements and add 1 to the sum
+- And also change the second element value by first (element+1)
+### 561. Array Partition
+[Leetcode link](https://leetcode.com/problems/array-partition/)
+<br>
+Given an integer array nums of 2n integers, group these integers into n pairs (a1, b1), (a2, b2), ..., (an, bn) such that the sum of min(ai, bi) for all i is maximized. Return the maximized sum.
+
+Example 1:
+Input: nums = [1,4,3,2]
+Output: 4
+Explanation: All possible pairings (ignoring the ordering of elements) are:
+1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
+2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
+3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
+So the maximum possible sum is 4.
+
+Example 2:
+Input: nums = [6,2,6,5,1,2]
+Output: 9
+Explanation: The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
+
+Constraints:
+1 <= n <= 104
+nums.length == 2 * n
+-104 <= nums[i] <= 104
+
+```java
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum=0;
+        for(int i=0;i<nums.length-1;i+=2)
+        {
+            sum+=Math.min(nums[i],nums[i+1]);
+        }
+        return sum;
+    }
+}
+```
+- In this code we form a pair.
+- we add the minimum of the each pair to the sum and return the sum as a answer.
+- So how we must maximaize the sum.
+- What we can do is first we sort the array then only we get the maximum sum
+- because we get the minimum to the next immediate number.
+
      
 
 
