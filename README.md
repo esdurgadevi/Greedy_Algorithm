@@ -832,8 +832,88 @@ class Solution {
 - So how we must maximaize the sum.
 - What we can do is first we sort the array then only we get the maximum sum
 - because we get the minimum to the next immediate number.
+### 1974. Minimum Time to Type Word Using Special Typewriter
+[Leetcode link](https://leetcode.com/problems/minimum-time-to-type-word-using-special-typewriter/)
+<br>
+There is a special typewriter with lowercase English letters 'a' to 'z' arranged in a circle with a pointer. A character can only be typed if the pointer is pointing to that character. The pointer is initially pointing to the character 'a'.
+![](https://assets.leetcode.com/uploads/2021/07/31/chart.jpg)
+<br>
+Each second, you may perform one of the following operations:
+Move the pointer one character counterclockwise or clockwise.
+Type the character the pointer is currently on.
+Given a string word, return the minimum number of seconds to type out the characters in word.
+ 
+Example 1:
+Input: word = "abc"
+Output: 5
+Explanation: 
+The characters are printed as follows:
+- Type the character 'a' in 1 second since the pointer is initially on 'a'.
+- Move the pointer clockwise to 'b' in 1 second.
+- Type the character 'b' in 1 second.
+- Move the pointer clockwise to 'c' in 1 second.
+- Type the character 'c' in 1 second.
 
-     
+Example 2:
+Input: word = "bza"
+Output: 7
+Explanation:
+The characters are printed as follows:
+- Move the pointer clockwise to 'b' in 1 second.
+- Type the character 'b' in 1 second.
+- Move the pointer counterclockwise to 'z' in 2 seconds.
+- Type the character 'z' in 1 second.
+- Move the pointer clockwise to 'a' in 1 second.
+- Type the character 'a' in 1 second.
+  
+Example 3:
+Input: word = "zjpc"
+Output: 34
+Explanation:
+The characters are printed as follows:
+- Move the pointer counterclockwise to 'z' in 1 second.
+- Type the character 'z' in 1 second.
+- Move the pointer clockwise to 'j' in 10 seconds.
+- Type the character 'j' in 1 second.
+- Move the pointer clockwise to 'p' in 6 seconds.
+- Type the character 'p' in 1 second.
+- Move the pointer counterclockwise to 'c' in 13 seconds.
+- Type the character 'c' in 1 second.
 
+Constraints:
+1 <= word.length <= 100
+word consists of lowercase English letters.
+
+```java
+class Solution {
+    public int minTimeToType(String word) {
+        int ans = word.length();
+        if(word.charAt(0)<='m') ans+=Math.abs('a'-word.charAt(0));
+        else ans+=26-Math.abs('a'-word.charAt(0));
+        for(int i=0;i<word.length()-1;i++)
+        {
+            if(Math.abs(word.charAt(i)-word.charAt(i+1))>13)
+            {
+                System.out.println(26-Math.abs(word.charAt(i)-word.charAt(i+1)));
+                ans+=26-Math.abs(word.charAt(i)-word.charAt(i+1));
+            }
+            else 
+            {
+                System.out.println(Math.abs(word.charAt(i)-word.charAt(i+1)));
+                ans+=Math.abs(word.charAt(i)-word.charAt(i+1));
+            }
+        }
+        return ans;
+    }
+}
+```
+- in this code we give a minimum time to type the string
+- in the ans first i declare the length of the string because 1 second will take for ftype the word we must type the each letter in the string so each will take one second.
+- then initially the pointer will point the letter 'a' so first we move the pointer to the first letter of the word so if the first letter is less than the 'm' we add the abs of the 'a' and the first word.
+- Other wise we subract the abs value to the 26
+- because it will rotate in counter clock wise.
+- in the innerside of the loop the abs of the adjacent letters is greater than the value of 13 we will subract the abs value from 26
+- Other wise we straigtly add the abs vlaue to the ans.
+**NOTE : The noted abs value in the above describtion is abs(adjacent element letters)**
 
 
