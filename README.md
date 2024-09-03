@@ -915,5 +915,35 @@ class Solution {
 - in the innerside of the loop the abs of the adjacent letters is greater than the value of 13 we will subract the abs value from 26
 - Other wise we straigtly add the abs vlaue to the ans.
 **NOTE : The noted abs value in the above describtion is abs(adjacent element letters)**
-
-
+### 409. Longest Palindrome
+[Leetcode link](https://leetcode.com/problems/longest-palindrome/?envType=problem-list-v2&envId=greedy&status=TO_DO&difficulty=EASY)
+<br>
+Given a string s which consists of lowercase or uppercase letters, return the length of the longest 
+palindrome that can be built with those letters. Letters are case sensitive, for example, "Aa" is not considered a palindrome.
+Example 1:
+Input: s = "abccccdd"
+Output: 7
+Explanation: One longest palindrome that can be built is "dccaccd", whose length is 7.
+Example 2:
+Input: s = "a"
+Output: 1
+Explanation: The longest palindrome that can be built is "a", whose length is 1.
+Constraints:
+1 <= s.length <= 2000
+s consists of lowercase and/or uppercase English letters only.
+```java
+class Solution {
+    public int longestPalindrome(String s) {
+        int[] arr = new int[58];
+        int l = s.length(),f=0;
+        for(int i=0;i<s.length();i++) arr[s.charAt(i)-'A']++;
+        for(int i=0;i<58;i++){
+            if(arr[i]%2!=0){
+                if(f==0) f=1;
+                else l--;
+            }
+        }
+        return l;
+    }
+}
+```
