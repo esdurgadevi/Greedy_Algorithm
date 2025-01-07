@@ -947,3 +947,59 @@ class Solution {
     }
 }
 ```
+### 56. Merge Intervals
+[Leetcode link](https://leetcode.com/problems/non-overlapping-intervals/)
+<br>
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+ 
+
+Example 1:
+
+Input: intervals = [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].
+Example 2:
+
+Input: intervals = [[1,4],[4,5]]
+Output: [[1,5]]
+Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+ 
+
+Constraints:
+
+1 <= intervals.length <= 104
+intervals[i].length == 2
+0 <= starti <= endi <= 104
+
+```java
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        int c = 0;
+        List<List<Integer>> list = new ArrayList<>();
+        for(int row[]:intervals)
+        {
+            List<Integer> innerlist = new ArrayList<>();
+            for(int x:row)
+            {
+                innerlist.add(x);
+            }
+            list.add(innerlist);
+        }
+        list.sort((a, b) -> {
+            if (!a.get(1).equals(b.get(1))) return Integer.compare(a.get(1), b.get(1));
+            else return Integer.compare(a.get(0), b.get(0)); 
+        });
+        int end = list.get(0).get(1);
+        for(int i=1;i<list.size();i++)
+        {
+            if(list.get(i).get(0)<end) c++;
+            else end = list.get(i).get(1);
+        }
+        return c;
+    }
+}
+```
+- Tor reduce the overlaping interval and minimize this count first we sort the interval depends on the end time.
+- Then if the next interval's start value is less than the end value then that should must removed so remove that other wise change the end value by the current intervals end value.
+> [REference](https://www.youtube.com/watch?v=HDHQ8lAWakY)
