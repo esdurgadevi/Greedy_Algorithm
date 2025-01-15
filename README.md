@@ -1003,3 +1003,67 @@ class Solution {
 - Tor reduce the overlaping interval and minimize this count first we sort the interval depends on the end time.
 - Then if the next interval's start value is less than the end value then that should must removed so remove that other wise change the end value by the current intervals end value.
 > [REference](https://www.youtube.com/watch?v=HDHQ8lAWakY)
+### 2429. Minimize XOR
+[Leetcode link](https://leetcode.com/problems/minimize-xor/?envType=daily-question&envId=2025-01-15)
+<br>
+Given two positive integers num1 and num2, find the positive integer x such that:
+
+x has the same number of set bits as num2, and
+The value x XOR num1 is minimal.
+Note that XOR is the bitwise XOR operation.
+
+Return the integer x. The test cases are generated such that x is uniquely determined.
+
+The number of set bits of an integer is the number of 1's in its binary representation.
+
+ 
+
+Example 1:
+
+Input: num1 = 3, num2 = 5
+Output: 3
+Explanation:
+The binary representations of num1 and num2 are 0011 and 0101, respectively.
+The integer 3 has the same number of set bits as num2, and the value 3 XOR 3 = 0 is minimal.
+Example 2:
+
+Input: num1 = 1, num2 = 12
+Output: 3
+Explanation:
+The binary representations of num1 and num2 are 0001 and 1100, respectively.
+The integer 3 has the same number of set bits as num2, and the value 3 XOR 1 = 2 is minimal.
+ 
+
+Constraints:
+
+1 <= num1, num2 <= 109
+
+```java
+class Solution {
+    public int minimizeXor(int num1, int num2) {
+        int count = 0;
+        while(num2>0){
+            num2 = (num2 & (num2-1));
+            count++;
+        }
+        int res=0;
+        for(int i=31;i>=0 && count>0;i--){
+            if((num1 & (1<<i)) != 0){
+                count--;
+                res += (1<<i);
+            }
+        }
+        for(int i=0;i<32 && count>0;i++){
+            if((num1 & (1<<i)) == 0)
+            {
+                count--;
+                res += (1<<i);
+            } 
+        }
+        return res;
+    }
+}
+```
+- First to find the number of set bits in num2 with the optimal way.
+- Then from the right to left that is in num1 setbits then we set that bit in the res also and the remaining set bit will set from the right to left for the purpose of reduce the value.
+> [Reference](https://www.youtube.com/watch?v=zSuIRdCuRmw)
