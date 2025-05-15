@@ -1067,3 +1067,72 @@ class Solution {
 - First to find the number of set bits in num2 with the optimal way.
 - Then from the right to left that is in num1 setbits then we set that bit in the res also and the remaining set bit will set from the right to left for the purpose of reduce the value.
 > [Reference](https://www.youtube.com/watch?v=zSuIRdCuRmw)
+
+### 2900. Longest Unequal Adjacent Groups Subsequence I
+[Leetcode link](https://leetcode.com/problems/longest-unequal-adjacent-groups-subsequence-i/?envType=daily-question&envId=2025-05-15)
+<br>
+You are given a string array words and a binary array groups both of length n.
+
+A subsequence of words is alternating if for any two consecutive strings in the sequence, their corresponding elements at the same indices in groups are different (that is, there cannot be consecutive 0 or 1).
+
+Your task is to select the longest alternating subsequence from words.
+
+Return the selected subsequence. If there are multiple answers, return any of them.
+
+Note: The elements in words are distinct.
+
+ 
+
+Example 1:
+
+Input: words = ["e","a","b"], groups = [0,0,1]
+
+Output: ["e","b"]
+
+Explanation: A subsequence that can be selected is ["e","b"] because groups[0] != groups[2]. Another subsequence that can be selected is ["a","b"] because groups[1] != groups[2]. It can be demonstrated that the length of the longest subsequence of indices that satisfies the condition is 2.
+
+Example 2:
+
+Input: words = ["a","b","c","d"], groups = [1,0,1,1]
+
+Output: ["a","b","c"]
+
+Explanation: A subsequence that can be selected is ["a","b","c"] because groups[0] != groups[1] and groups[1] != groups[2]. Another subsequence that can be selected is ["a","b","d"] because groups[0] != groups[1] and groups[1] != groups[3]. It can be shown that the length of the longest subsequence of indices that satisfies the condition is 3.
+
+ 
+
+Constraints:
+
+1 <= n == words.length == groups.length <= 100
+1 <= words[i].length <= 10
+groups[i] is either 0 or 1.
+words consists of distinct strings.
+words[i] consists of lowercase English letters.
+```java
+class Solution {
+    public List<String> getLongestSubsequence(String[] words, int[] groups) {
+        int max = 0;
+        List<String> ans = new ArrayList<>();
+        for(int i=0;i<groups.length;i++)
+        {
+            List<String> temp = new ArrayList<>();
+            temp.add(words[i]);
+            int prev = groups[i];
+            for(int j=i+1;j<groups.length;j++)
+            {
+                if(prev != groups[j])
+                {
+                    temp.add(words[j]);
+                    prev = groups[j];
+                }
+            }
+            if(ans.size()<temp.size())
+            {
+                ans.clear();
+                ans = new ArrayList<>(temp);
+            }
+        }
+        return ans;
+    }
+}
+```
