@@ -1136,3 +1136,126 @@ class Solution {
     }
 }
 ```
+### 1432. Max Difference You Can Get From Changing an Integer
+[Leetcode link](https://leetcode.com/problems/max-difference-you-can-get-from-changing-an-integer/?envType=daily-question&envId=2025-06-15)
+<br>
+You are given an integer num. You will apply the following steps to num two separate times: Pick a digit x (0 <= x <= 9). Pick another digit y (0 <= y <= 9). Note y can be equal to x. Replace all the occurrences of x in the decimal representation of num by y. Let a and b be the two results from applying the operation to num independently. Return the max difference between a and b. Note that neither a nor b may have any leading zeros, and must not be 0.
+
+Example 1:
+Input: num = 555
+Output: 888
+Explanation: The first time pick x = 5 and y = 9 and store the new integer in a.
+The second time pick x = 5 and y = 1 and store the new integer in b.
+We have now a = 999 and b = 111 and max difference = 888
+
+Example 2:
+Input: num = 9
+Output: 8
+Explanation: The first time pick x = 9 and y = 9 and store the new integer in a.
+The second time pick x = 9 and y = 1 and store the new integer in b.
+We have now a = 9 and b = 1 and max difference = 8
+
+Constraints:
+1 <= num <= 108
+
+```java
+class Solution {
+    public int maxDiff(int num) {
+        StringBuffer max = new StringBuffer(); 
+        StringBuffer min = new StringBuffer();    
+        String temp = Integer.toString(num);
+        char ch1 = '0',ch2='-';
+        int f1 = 0,f2=0,f3=0;
+        if(temp.charAt(0)>'1') 
+        {
+            f2=1;
+            ch2 = temp.charAt(0);
+        }
+        else f3=1;
+        for(int i=0;i<temp.length();i++)
+        {
+            if(temp.charAt(i)!='9' && f1==0) 
+            {
+                ch1 = temp.charAt(i);
+                f1 = 1;
+            }
+            if(f3==1)
+            {
+                if(temp.charAt(i)>'1')
+                {
+                    f3 = 2;
+                    ch2 = temp.charAt(i);
+                }
+            }
+        }
+        for(int i=0;i<temp.length();i++)
+        {
+            if(temp.charAt(i)==ch1) max.append('9');
+            else max.append(temp.charAt(i));
+            if(f3==2 && temp.charAt(i)==ch2) min.append('0'); 
+            else if(temp.charAt(i)==ch2) min.append('1');
+            else min.append(temp.charAt(i));
+        }
+        System.out.print(Integer.parseInt(min.toString()));
+        return Integer.parseInt(max.toString())-Integer.parseInt(min.toString());
+    }
+}
+```
+### 2566. Maximum Difference by Remapping a Digit
+[Leetcode link](https://leetcode.com/problems/maximum-difference-by-remapping-a-digit/)
+<br>
+You are given an integer num. You know that Bob will sneakily remap one of the 10 possible digits (0 to 9) to another digit. Return the difference between the maximum and minimum values Bob can make by remapping exactly one digit in num.
+
+Notes:
+When Bob remaps a digit d1 to another digit d2, Bob replaces all occurrences of d1 in num with d2.
+Bob can remap a digit to itself, in which case num does not change.
+Bob can remap different digits for obtaining minimum and maximum values respectively.
+The resulting number after remapping can contain leading zeroes.
+
+Example 1:
+Input: num = 11891
+Output: 99009
+Explanation: 
+To achieve the maximum value, Bob can remap the digit 1 to the digit 9 to yield 99899.
+To achieve the minimum value, Bob can remap the digit 1 to the digit 0, yielding 890.
+The difference between these two numbers is 99009.
+
+Example 2:
+Input: num = 90
+Output: 99
+Explanation:
+The maximum value that can be returned by the function is 99 (if 0 is replaced by 9) and the minimum value that can be returned by the function is 0 (if 9 is replaced by 0).
+Thus, we return 99.
+```java
+class Solution {
+    public int minMaxDifference(int num) {
+        StringBuffer max = new StringBuffer(); 
+        StringBuffer min = new StringBuffer();    
+        String temp = Integer.toString(num);
+        char ch1 = '0',ch2='0';
+        int f1 = 0,f2=0;
+        for(int i=0;i<temp.length();i++)
+        {
+            if(temp.charAt(i)!='9' && f1==0) 
+            {
+                ch1 = temp.charAt(i);
+                f1 = 1;
+            }
+            if(temp.charAt(i)!='0' && f2==0)
+            {
+                ch2 = temp.charAt(i);
+                f2=1;
+            }
+        }
+        for(int i=0;i<temp.length();i++)
+        {
+            if(temp.charAt(i)==ch1) max.append('9');
+            else max.append(temp.charAt(i));
+            if(temp.charAt(i)==ch2) min.append('0');
+            else min.append(temp.charAt(i));
+        }
+        System.out.print(Integer.parseInt(min.toString()));
+        return Integer.parseInt(max.toString())-Integer.parseInt(min.toString());
+    }
+}
+```
