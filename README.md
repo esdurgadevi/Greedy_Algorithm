@@ -1259,3 +1259,296 @@ class Solution {
     }
 }
 ```
+### 2294. Partition Array Such That Maximum Difference Is K
+[Leetcode link](https://leetcode.com/problems/partition-array-such-that-maximum-difference-is-k/?envType=daily-question&envId=2025-06-19)
+<br>
+You are given an integer array nums and an integer k. You may partition nums into one or more subsequences such that each element in nums appears in exactly one of the subsequences.
+
+Return the minimum number of subsequences needed such that the difference between the maximum and minimum values in each subsequence is at most k.
+
+A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
+
+ 
+
+Example 1:
+
+Input: nums = [3,6,1,2,5], k = 2
+Output: 2
+Explanation:
+We can partition nums into the two subsequences [3,1,2] and [6,5].
+The difference between the maximum and minimum value in the first subsequence is 3 - 1 = 2.
+The difference between the maximum and minimum value in the second subsequence is 6 - 5 = 1.
+Since two subsequences were created, we return 2. It can be shown that 2 is the minimum number of subsequences needed.
+Example 2:
+
+Input: nums = [1,2,3], k = 1
+Output: 2
+Explanation:
+We can partition nums into the two subsequences [1,2] and [3].
+The difference between the maximum and minimum value in the first subsequence is 2 - 1 = 1.
+The difference between the maximum and minimum value in the second subsequence is 3 - 3 = 0.
+Since two subsequences were created, we return 2. Note that another optimal solution is to partition nums into the two subsequences [1] and [2,3].
+Example 3:
+
+Input: nums = [2,2,4,5], k = 0
+Output: 3
+Explanation:
+We can partition nums into the three subsequences [2,2], [4], and [5].
+The difference between the maximum and minimum value in the first subsequences is 2 - 2 = 0.
+The difference between the maximum and minimum value in the second subsequences is 4 - 4 = 0.
+The difference between the maximum and minimum value in the third subsequences is 5 - 5 = 0.
+Since three subsequences were created, we return 3. It can be shown that 3 is the minimum number of subsequences needed.
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+0 <= nums[i] <= 105
+0 <= k <= 105
+
+```java
+class Solution {
+    public int partitionArray(int[] nums, int k) {
+        Arrays.sort(nums);
+        int ans = 0;
+        int min = nums[0];
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]-min>k)
+            {
+                min = nums[i];
+                ans++;
+            }
+        }
+        return ans+1;
+    }
+}
+```
+### 2966. Divide Array Into Arrays With Max Difference
+[Leetcode link](https://leetcode.com/problems/divide-array-into-arrays-with-max-difference/description/?envType=daily-question&envId=2025-06-19)
+<br>
+You are given an integer array nums of size n where n is a multiple of 3 and a positive integer k.
+
+Divide the array nums into n / 3 arrays of size 3 satisfying the following condition:
+
+The difference between any two elements in one array is less than or equal to k.
+Return a 2D array containing the arrays. If it is impossible to satisfy the conditions, return an empty array. And if there are multiple answers, return any of them.
+
+ 
+
+Example 1:
+
+Input: nums = [1,3,4,8,7,9,3,5,1], k = 2
+
+Output: [[1,1,3],[3,4,5],[7,8,9]]
+
+Explanation:
+
+The difference between any two elements in each array is less than or equal to 2.
+
+Example 2:
+
+Input: nums = [2,4,2,2,5,2], k = 2
+
+Output: []
+
+Explanation:
+
+Different ways to divide nums into 2 arrays of size 3 are:
+
+[[2,2,2],[2,4,5]] (and its permutations)
+[[2,2,4],[2,2,5]] (and its permutations)
+Because there are four 2s there will be an array with the elements 2 and 5 no matter how we divide it. since 5 - 2 = 3 > k, the condition is not satisfied and so there is no valid division.
+
+Example 3:
+
+Input: nums = [4,2,9,8,2,12,7,12,10,5,8,5,5,7,9,2,5,11], k = 14
+
+Output: [[2,2,2],[4,5,5],[5,5,7],[7,8,8],[9,9,10],[11,12,12]]
+
+Explanation:
+
+The difference between any two elements in each array is less than or equal to 14.
+
+ 
+
+Constraints:
+
+n == nums.length
+1 <= n <= 105
+n is a multiple of 3
+1 <= nums[i] <= 105
+1 <= k <= 105
+
+```java
+class Solution {
+    public int[][] divideArray(int[] nums, int k) {
+        int[][] arr = new int[nums.length/3][3];
+        Arrays.sort(nums);
+        int index = 0;
+        for(int i=0;i<=nums.length-3;i+=3)
+        {
+            if(nums[i+1]-nums[i]<=k && nums[i+2]-nums[i]<=k && nums[i+2]-nums[i+1]<=k) 
+            {
+                arr[index][0] = nums[i];
+                arr[index][1] = nums[i+1];
+                arr[index++][2] = nums[i+2];
+            }
+            else return new int[0][];
+        }
+        return arr;
+    }
+}
+```
+### 2016. Maximum Difference Between Increasing Elements
+[Leetcode link](https://leetcode.com/problems/maximum-difference-between-increasing-elements/?envType=daily-question&envId=2025-06-19)
+<br>
+Given a 0-indexed integer array nums of size n, find the maximum difference between nums[i] and nums[j] (i.e., nums[j] - nums[i]), such that 0 <= i < j < n and nums[i] < nums[j].
+
+Return the maximum difference. If no such i and j exists, return -1.
+
+ 
+
+Example 1:
+
+Input: nums = [7,1,5,4]
+Output: 4
+Explanation:
+The maximum difference occurs with i = 1 and j = 2, nums[j] - nums[i] = 5 - 1 = 4.
+Note that with i = 1 and j = 0, the difference nums[j] - nums[i] = 7 - 1 = 6, but i > j, so it is not valid.
+Example 2:
+
+Input: nums = [9,4,3,2]
+Output: -1
+Explanation:
+There is no i and j such that i < j and nums[i] < nums[j].
+Example 3:
+
+Input: nums = [1,5,2,10]
+Output: 9
+Explanation:
+The maximum difference occurs with i = 0 and j = 3, nums[j] - nums[i] = 10 - 1 = 9.
+ 
+
+Constraints:
+
+n == nums.length
+2 <= n <= 1000
+1 <= nums[i] <= 109
+```java
+class Solution {
+    public int maximumDifference(int[] nums) {
+        int max = -1;
+        for(int i=0;i<nums.length;i++)
+        {
+            for(int j=i+1;j<nums.length;j++)
+            {
+                max = Math.max(max,nums[j]-nums[i]);
+            }
+        }
+        if(max<=0) return -1;
+        return max;
+    }
+}
+```
+### 3405. Count the Number of Arrays with K Matching Adjacent Elements
+[Leetcode link](https://leetcode.com/problems/count-the-number-of-arrays-with-k-matching-adjacent-elements/?envType=daily-question&envId=2025-06-19)
+<br>
+You are given three integers n, m, k. A good array arr of size n is defined as follows:
+
+Each element in arr is in the inclusive range [1, m].
+Exactly k indices i (where 1 <= i < n) satisfy the condition arr[i - 1] == arr[i].
+Return the number of good arrays that can be formed.
+
+Since the answer may be very large, return it modulo 109 + 7.
+
+ 
+
+Example 1:
+
+Input: n = 3, m = 2, k = 1
+
+Output: 4
+
+Explanation:
+
+There are 4 good arrays. They are [1, 1, 2], [1, 2, 2], [2, 1, 1] and [2, 2, 1].
+Hence, the answer is 4.
+Example 2:
+
+Input: n = 4, m = 2, k = 2
+
+Output: 6
+
+Explanation:
+
+The good arrays are [1, 1, 1, 2], [1, 1, 2, 2], [1, 2, 2, 2], [2, 1, 1, 1], [2, 2, 1, 1] and [2, 2, 2, 1].
+Hence, the answer is 6.
+Example 3:
+
+Input: n = 5, m = 2, k = 0
+
+Output: 2
+
+Explanation:
+
+The good arrays are [1, 2, 1, 2, 1] and [2, 1, 2, 1, 2]. Hence, the answer is 2.
+ 
+
+Constraints:
+
+1 <= n <= 105
+1 <= m <= 105
+0 <= k <= n - 1
+```java
+class Solution {
+    private static final int MOD = 1000000007;
+    
+    private static final int MAXN = 100000;
+    
+    private static long[] fact = new long[MAXN + 1];
+    private static long[] invFact = new long[MAXN + 1];
+    
+    static {
+        fact[0] = 1L;
+        for (int i = 1; i <= MAXN; i++) {
+            fact[i] = fact[i - 1] * i % MOD;
+        }
+        invFact[MAXN] = modExp(fact[MAXN], MOD - 2, MOD); 
+        for (int i = MAXN - 1; i >= 0; i--) {
+            invFact[i] = invFact[i + 1] * (i + 1) % MOD;
+        }
+    }
+    
+    private static long modExp(long base, int exp, int mod) {
+        long result = 1L;
+        while (exp > 0) {
+            if ((exp & 1) == 1) {
+                result = (result * base) % mod;
+            }
+            base = (base * base) % mod;
+            exp >>= 1;
+        }
+        return result;
+    }
+    
+    private static long nCr(int n, int r) {
+        if (r < 0 || r > n) return 0;
+        return fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;
+    }
+    
+    public int countGoodArrays(int n, int m, int k) {
+        if (n == 1) {
+            return (k == 0) ? m : 0;
+        }
+        
+        long choose = nCr(n - 1, k);
+        long ways = choose % MOD;
+        
+        ways = (ways * m) % MOD;
+        ways = (ways * modExp(m - 1, n - k - 1, MOD)) % MOD;
+        
+        return (int) ways;
+    }
+}
+```
